@@ -19,6 +19,16 @@ namespace XFilter.Tests
             builder.AddClause("Name", "William", Operator.Equal, Connector.None);
 
             var engine = new FilterEngine();
+
+            var dictionary = new Dictionary<string, object>();
+            dictionary.Add("Name", "Ana");
+            dictionary.Add("Age", 31);
+
+            var obj = dictionary.BuildTargetObject();
+
+            var isValid = engine.Evaluate(obj, builder.Clauses);
+
+
             var expression = engine.BuildPredicate<Person>(builder.Clauses);
 
             var result = Persons.Where(expression);
