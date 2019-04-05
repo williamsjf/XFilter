@@ -1,10 +1,11 @@
-﻿using System.Linq.Expressions;
+﻿using System;
+using System.Linq.Expressions;
 using XFilter.Exceptions;
 using XFilter.Query;
 
 namespace XFilter.DataExpressionHandlers
 {
-    public class ExpressionIntHandler : DataHandler<int>, IExpressionDataHandler
+    public class ExpressionBooleanDataHandler : DataHandler<bool>
     {
         public override Expression BuildExpression(Clause clause, MemberExpression memberExpression, ConstantExpression constantExpression)
         {
@@ -16,20 +17,18 @@ namespace XFilter.DataExpressionHandlers
                 case Operator.NotEqual:
                     return NotEquals(clause, memberExpression, constantExpression);
 
+                case Operator.Contains:
+                case Operator.NotContains:
+                case Operator.StartsWith:
+                case Operator.EndsWith:
                 case Operator.GreaterThan:
-                    return GreaterThan(clause, memberExpression, constantExpression);
-
-                case Operator.GreaterThanOrEqual:
-                    return GreaterThanOrEqual(clause, memberExpression, constantExpression);
-
                 case Operator.LessThan:
-                    return LessThan(clause, memberExpression, constantExpression);
-
+                case Operator.GreaterThanOrEqual:
                 case Operator.LessThanOrEqual:
-                    return LessThanOrEqual(clause, memberExpression, constantExpression);
+                    throw new NotImplementedException();
 
                 default:
-                    throw new UnsupportedOperatorException(clause.Operator, typeof(int));
+                    throw new UnsupportedOperatorException(clause.Operator, typeof(bool));
             }
         }
     }

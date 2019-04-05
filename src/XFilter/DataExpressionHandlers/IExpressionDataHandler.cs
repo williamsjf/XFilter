@@ -6,8 +6,6 @@ namespace XFilter.DataExpressionHandlers
 {
     public interface IExpressionDataHandler
     {
-        Type Type { get; }
-
         Expression BuildExpression(Clause clause, MemberExpression memberExpression, ConstantExpression constantExpression);
     }
 }

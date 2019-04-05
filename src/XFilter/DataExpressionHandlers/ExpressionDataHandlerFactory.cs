@@ -18,7 +18,7 @@ namespace XFilter.DataExpressionHandlers
         {
             var dataHandlers = GetDefaultHandlers();
 
-            var targetHandler = dataHandlers.FirstOrDefault(x => x.Type == type);
+            var targetHandler = dataHandlers.FirstOrDefault(x => x.GetType().BaseType.GetGenericArguments().First() == type);
             if (targetHandler == null)
                 throw new ExpressionDataHandlerException(type);
 
@@ -57,7 +57,7 @@ namespace XFilter.DataExpressionHandlers
             var classNamespace = typeof(IExpressionDataHandler).Namespace;
 
             var dataHandlers = AppDomain.CurrentDomain.GetAssemblies()
-                  .SelectMany(s => s.GetTypes().Where(x => x.Namespace == classNamespace && x.IsClass))
+                  .SelectMany(s => s.GetTypes().Where(x => x.Namespace == classNamespace && x.IsClass && !x.IsAbstract))
                   .Where(p => typeof(IExpressionDataHandler).IsAssignableFrom(p));
 
             foreach (var dataHandler in dataHandlers)

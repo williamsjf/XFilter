@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 using XFilter.Engine;
 using XFilter.Query;
@@ -7,19 +6,18 @@ using Xunit;
 
 namespace XFilter.Tests
 {
-    public class DateTimeHandlerTests
+    public class DateTimeHandlerTests : BaseTests
     {
         [Fact]
         public void DateTime_Equals()
         {
             var builder = new QueryBuilder();
             builder.AddClause("BirthDate", new DateTime(1986, 05, 12), Operator.Equal, Connector.And);
-            builder.AddClause("SendDate", new DateTime(2018, 08, 01), Operator.Equal, Connector.And);
 
             var engine = new FilterEngine();
 
-            var expression = engine.BuildPredicate<DateTimeMock>(builder.Clauses);
-            var result = DateTimeMock.Where(expression);
+            var expression = engine.BuildPredicate<Person>(builder.Clauses);
+            var result = Persons.Where(expression);
 
             Assert.True(result.Count() == 1);
         }
@@ -32,8 +30,8 @@ namespace XFilter.Tests
 
             var engine = new FilterEngine();
 
-            var expression = engine.BuildPredicate<DateTimeMock>(builder.Clauses);
-            var result = DateTimeMock.Where(expression);
+            var expression = engine.BuildPredicate<Person>(builder.Clauses);
+            var result = Persons.Where(expression);
 
             Assert.True(result.Count() == 2);
         }
@@ -42,14 +40,14 @@ namespace XFilter.Tests
         public void DateTime_GreaterThan()
         {
             var builder = new QueryBuilder();
-            builder.AddClause("BirthDate", new DateTime(1990, 05, 10), Operator.GreaterThan, Connector.And);
+            builder.AddClause("BirthDate", new DateTime(1986, 05, 10), Operator.GreaterThan, Connector.And);
 
             var engine = new FilterEngine();
 
-            var expression = engine.BuildPredicate<DateTimeMock>(builder.Clauses);
-            var result = DateTimeMock.Where(expression);
+            var expression = engine.BuildPredicate<Person>(builder.Clauses);
+            var result = Persons.Where(expression);
 
-            Assert.True(result.Count() == 1);
+            Assert.True(result.Count() == 2);
         }
 
         [Fact]
@@ -60,8 +58,8 @@ namespace XFilter.Tests
 
             var engine = new FilterEngine();
 
-            var expression = engine.BuildPredicate<DateTimeMock>(builder.Clauses);
-            var result = DateTimeMock.Where(expression);
+            var expression = engine.BuildPredicate<Person>(builder.Clauses);
+            var result = Persons.Where(expression);
 
             Assert.True(result.Count() == 2);
         }
@@ -70,12 +68,12 @@ namespace XFilter.Tests
         public void DateTime_LessThan()
         {
             var builder = new QueryBuilder();
-            builder.AddClause("BirthDate", new DateTime(1990, 05, 12), Operator.LessThan, Connector.And);
+            builder.AddClause("BirthDate", new DateTime(1990, 03, 2), Operator.LessThan, Connector.And);
 
             var engine = new FilterEngine();
 
-            var expression = engine.BuildPredicate<DateTimeMock>(builder.Clauses);
-            var result = DateTimeMock.Where(expression);
+            var expression = engine.BuildPredicate<Person>(builder.Clauses);
+            var result = Persons.Where(expression);
 
             Assert.True(result.Count() == 1);
         }
@@ -84,26 +82,14 @@ namespace XFilter.Tests
         public void DateTime_LessThanOrEqual()
         {
             var builder = new QueryBuilder();
-            builder.AddClause("BirthDate", new DateTime(1990, 05, 12), Operator.LessThanOrEqual, Connector.And);
+            builder.AddClause("BirthDate", new DateTime(1990, 03, 2), Operator.LessThanOrEqual, Connector.And);
 
             var engine = new FilterEngine();
 
-            var expression = engine.BuildPredicate<DateTimeMock>(builder.Clauses);
-            var result = DateTimeMock.Where(expression);
+            var expression = engine.BuildPredicate<Person>(builder.Clauses);
+            var result = Persons.Where(expression);
 
             Assert.True(result.Count() == 2);
         }
-
-        private readonly Collection<DateTimeMock> DateTimeMock = new Collection<DateTimeMock>()
-        {
-            new DateTimeMock { BirthDate = new DateTime(1986, 05, 12), SendDate = new DateTime(2018, 08, 01) },
-            new DateTimeMock { BirthDate = new DateTime(1990, 05, 12), SendDate = new DateTime(2017, 09, 01) },
-        };
-    }
-
-    public class DateTimeMock
-    {
-        public DateTime BirthDate { get; set; }
-        public DateTime SendDate { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using XFilter.Query;
 
 namespace XFilter.DataExpressionHandlers
 {
-    public class ExpressionIntHandler : DataHandler<int>, IExpressionDataHandler
+    public class ExpressionLongDataHandler : DataHandler<long>
     {
         public override Expression BuildExpression(Clause clause, MemberExpression memberExpression, ConstantExpression constantExpression)
         {
@@ -29,7 +29,7 @@ namespace XFilter.DataExpressionHandlers
                     return LessThanOrEqual(clause, memberExpression, constantExpression);
 
                 default:
-                    throw new UnsupportedOperatorException(clause.Operator, typeof(int));
+                    throw new UnsupportedOperatorException(clause.Operator, typeof(long));
             }
         }
     }

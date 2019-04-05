@@ -5,11 +5,9 @@ using XFilter.Query;
 
 namespace XFilter.DataExpressionHandlers
 {
-    public class ExpressionDateTimeHandler : IExpressionDataHandler
+    public class ExpressionDateTimeHandler : DataHandler<DateTime>, IExpressionDataHandler
     {
-        public Type Type => typeof(DateTime);
-
-        public Expression BuildExpression(Clause clause, MemberExpression memberExpression, ConstantExpression constantExpression)
+        public override Expression BuildExpression(Clause clause, MemberExpression memberExpression, ConstantExpression constantExpression)
         {
             switch (clause.Operator)
             {
@@ -32,80 +30,8 @@ namespace XFilter.DataExpressionHandlers
                     return LessThanOrEqual(clause, memberExpression, constantExpression);
 
                 default:
-                    throw new UnsupportedOperatorException(clause.Operator, Type);
+                    throw new UnsupportedOperatorException(clause.Operator, typeof(DateTime));
             }
-        }
-
-        public virtual Expression Equals(Clause clause, MemberExpression memberExpression, ConstantExpression constantExpression)
-        {
-            ExpressionType expressionType;
-
-            if (!Enum.TryParse(clause.Operator.ToString(), out expressionType))
-            {
-                throw new UnsupportedOperatorException(clause.Operator, Type);
-            }
-
-            return Expression.MakeBinary(expressionType, memberExpression, constantExpression);
-        }
-
-        public virtual Expression NotEquals(Clause clause, MemberExpression memberExpression, ConstantExpression constantExpression)
-        {
-            ExpressionType expressionType;
-
-            if (!Enum.TryParse(clause.Operator.ToString(), out expressionType))
-            {
-                throw new UnsupportedOperatorException(clause.Operator, Type);
-            }
-
-            return Expression.MakeBinary(expressionType, memberExpression, constantExpression);
-        }
-
-        public virtual Expression GreaterThan(Clause clause, MemberExpression memberExpression, ConstantExpression constantExpression)
-        {
-            ExpressionType expressionType;
-
-            if (!Enum.TryParse(clause.Operator.ToString(), out expressionType))
-            {
-                throw new UnsupportedOperatorException(clause.Operator, Type);
-            }
-
-            return Expression.MakeBinary(expressionType, memberExpression, constantExpression);
-        }
-
-        public virtual Expression GreaterThanOrEqual(Clause clause, MemberExpression memberExpression, ConstantExpression constantExpression)
-        {
-            ExpressionType expressionType;
-
-            if (!Enum.TryParse(clause.Operator.ToString(), out expressionType))
-            {
-                throw new UnsupportedOperatorException(clause.Operator, Type);
-            }
-
-            return Expression.MakeBinary(expressionType, memberExpression, constantExpression);
-        }
-
-        public virtual Expression LessThan(Clause clause, MemberExpression memberExpression, ConstantExpression constantExpression)
-        {
-            ExpressionType expressionType;
-
-            if (!Enum.TryParse(clause.Operator.ToString(), out expressionType))
-            {
-                throw new UnsupportedOperatorException(clause.Operator, Type);
-            }
-
-            return Expression.MakeBinary(expressionType, memberExpression, constantExpression);
-        }
-
-        public virtual Expression LessThanOrEqual(Clause clause, MemberExpression memberExpression, ConstantExpression constantExpression)
-        {
-            ExpressionType expressionType;
-
-            if (!Enum.TryParse(clause.Operator.ToString(), out expressionType))
-            {
-                throw new UnsupportedOperatorException(clause.Operator, Type);
-            }
-
-            return Expression.MakeBinary(expressionType, memberExpression, constantExpression);
         }
     }
 }
