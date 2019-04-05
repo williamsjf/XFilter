@@ -8,8 +8,8 @@ namespace XFilter.Tests
     {
         public ICollection<Person> Persons = new Collection<Person>
         {
-            new Person { Name = "Ana", Age = 32, BirthDate = new DateTime(1986, 05, 12), AccountBalance = 100000322332390323, IsActive = true },
-            new Person { Name = "William", Age = 33, BirthDate = new DateTime(1990, 03, 2), AccountBalance = 1000000098987868767, IsActive = false },
+            new Person { Name = "Ana", Age = 32, BirthDate = new DateTime(1986, 05, 12), AccountBalance = 100000322332390323, IsActive = true, Debit = 100 },
+            new Person { Name = "William", Age = 33, BirthDate = new DateTime(1990, 03, 2), AccountBalance = 1000000098987868767, IsActive = false, Debit = 200 },
         };
     }
 
@@ -24,5 +24,7 @@ namespace XFilter.Tests
         public long AccountBalance { get; set; }
 
         public bool IsActive { get; set; }
+
+        public decimal Debit { get; set; }
     }
 }
