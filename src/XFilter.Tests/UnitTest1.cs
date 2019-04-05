@@ -28,7 +28,6 @@ namespace XFilter.Tests
 
             var isValid = engine.Evaluate(obj, builder.Clauses);
 
-
             var expression = engine.BuildPredicate<Person>(builder.Clauses);
 
             var result = Persons.Where(expression);
